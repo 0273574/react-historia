@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { AlertCircle, Book } from 'lucide-react';
+'use client'
+
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface Opcja {
@@ -15,7 +16,7 @@ interface Wydarzenie {
 }
 
 const wydarzenia: Wydarzenie[] = [
-    {
+   {
         nazwa: "Kocioł pod Smoleńskiem",
         opis: "Niemieckie wojska, nacierające w kierunku Moskwy w ramach operacji Barbarossa, otoczyły siły radzieckie w rejonie Smoleńska. Mimo twardego oporu, Armia Czerwona została okrążona, co doprowadziło do ogromnych strat po stronie ZSRR.",
         opcje: {
@@ -94,21 +95,14 @@ const wydarzenia: Wydarzenie[] = [
       }
 ];
 
-interface AlertProps {
-  title: string;
-  children: React.ReactNode;
-  icon: React.ReactNode;
-}
-
-const Alert: React.FC<AlertProps> = ({ title, children, icon }) => (
-  <div className="bg-white/80 border-l-4 border-yellow-500 text-gray-700 p-4 mb-4 rounded-r-lg shadow-md" role="alert">
-    <div className="flex items-center mb-2">
-      {icon}
-      <p className="font-bold ml-2">{title}</p>
-    </div>
-    <p>{children}</p>
-  </div>
-);
+const achievements = [
+  { id: 'survivor', name: 'Przetrwałeś', description: 'Ukończyłeś grę' },
+  { id: 'highMorale', name: 'Wysoki duch bojowy', description: 'Osiągnąłeś morale powyżej 8' },
+  { id: 'strongForces', name: 'Potęga militarna', description: 'Osiągnąłeś siły powyżej 15' },
+  { id: 'perfectVictory', name: 'Doskonałe zwycięstwo', description: 'Ukończyłeś grę z siłami > 15 i morale > 7' },
+  { id: 'strategist', name: 'Strateg', description: 'Podejmij 3 decyzje z rzędu tego samego typu' },
+  { id: 'luckyGeneral', name: 'Szczęśliwy generał', description: 'Doświadcz 3 pozytywnych losowych wydarzeń' },
+];
 
 const GraFrontWschodni: React.FC = () => {
   const [mode, setMode] = useState<'start' | 'game' | 'info'>('start');
@@ -122,6 +116,115 @@ const GraFrontWschodni: React.FC = () => {
   const [statystyki, setStatystyki] = useState<{ tura: number; punkty: number; morale: number }[]>([
     { tura: 0, punkty: 10, morale: 5 }
   ]);
+  const [difficulty, setDifficulty] = useState<'easy' | 'normal' | 'hard'>('normal');
+  const [score, setScore] = useState(0);
+  const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>([]);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [streak, setStreak] = useState(0);
+  const [lastDecision, setLastDecision] = useState<string | null>(null);
+  const [luckyEvents, setLuckyEvents] = useState(0);
+  const [showAchievements, setShowAchievements] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
+
+  const playSound = useCallback((soundName: string) => {
+    if (soundEnabled) {
+      const audio = new Audio(`/sounds/${soundName}.mp3`);
+      audio.play();
+    }
+  }, [soundEnabled]);
+
+  const shuffledEvents = useMemo(() => {
+    return [...wydarzenia].sort(() => Math.random() - 0.5);
+  }, []);
+
+  useEffect(() => {
+    if (mode === 'game' && tura <= 10 && punkty > 0 && morale > 0) {
+      setWydarzenie(shuffledEvents[(tura - 1) % shuffledEvents.length]);
+      setStatystyki(prev => [...prev, { tura, punkty, morale }]);
+    } else if (mode === 'game') {
+      zakonczGre();
+    }
+  }, [tura, mode, punkty, morale, shuffledEvents]);
+
+  const wykonajAkcje = (zmianaSil: number, zmianaMorale: number, info: string = "", decyzja: string) => {
+    const difficultyMultiplier = difficulty === 'easy' ? 1.2 : difficulty === 'hard' ? 0.8 : 1;
+    let adjustedZmianaSil = Math.round(zmianaSil * difficultyMultiplier);
+    let adjustedZmianaMorale = Math.round(zmianaMorale * difficultyMultiplier);
+
+    if (decyzja === lastDecision) {
+      setStreak(prev => prev + 1);
+      if (streak >= 2) {
+        adjustedZmianaSil += 1;
+        adjustedZmianaMorale += 1;
+        unlockAchievement('strategist');
+      }
+    } else {
+      setStreak(0);
+    }
+    setLastDecision(decyzja);
+
+    setPunkty((prev) => Math.max(0, prev + adjustedZmianaSil));
+    setMorale((prev) => Math.max(0, prev + adjustedZmianaMorale));
+    setTura((prev) => prev + 1);
+    setKomunikat(`Zmiana sił: ${adjustedZmianaSil}, Zmiana morale: ${adjustedZmianaMorale}`);
+    setHistorycznaInformacja(info);
+    setScore((prev) => prev + Math.abs(adjustedZmianaSil) + Math.abs(adjustedZmianaMorale));
+
+    playSound('action');
+
+    if (Math.random() < 0.2) {
+      triggerRandomEvent();
+    }
+  };
+
+  const triggerRandomEvent = () => {
+    const events = [
+      { message: "Nieoczekiwane wsparcie sojuszników!", effect: () => { setPunkty(prev => prev + 2); setMorale(prev => prev + 1); setLuckyEvents(prev => prev + 1); } },
+      { message: "Nagły atak partyzantów!", effect: () => { setPunkty(prev => prev - 1); setMorale(prev => prev + 2); } },
+      { message: "Problemy z zaopatrzeniem!", effect: () => { setPunkty(prev => prev - 1); setMorale(prev => prev - 1); } },
+      { message: "Przełom technologiczny!", effect: () => { setPunkty(prev => prev + 3); setLuckyEvents(prev => prev + 1); } },
+      { message: "Dezercja w szeregach!", effect: () => { setPunkty(prev => prev - 2); setMorale(prev => prev - 2); } }
+    ];
+    const randomEvent = events[Math.floor(Math.random() * events.length)];
+    setKomunikat(prev => `${prev}\n${randomEvent.message}`);
+    randomEvent.effect();
+    playSound('random_event');
+
+    if (luckyEvents >= 2) {
+      unlockAchievement('luckyGeneral');
+    }
+  };
+
+  const zakonczGre = () => {
+    setKoniecGry(true);
+    if (punkty <= 0) {
+      setKomunikat("Twoje siły zostały rozbite. Niemcy zwyciężyli.");
+      playSound('defeat');
+    } else if (morale <= 0) {
+      setKomunikat("Morale twojej armii upadło. Żołnierze masowo dezerterują.");
+      playSound('defeat');
+    } else if (punkty > 15 && morale > 7) {
+      setKomunikat("Gratulacje! Udało Ci się powstrzymać niemiecką inwazję i odnieść zwycięstwo!");
+      playSound('victory');
+      unlockAchievement('perfectVictory');
+    } else if (punkty > 10 || morale > 5) {
+      setKomunikat("Udało Ci się przetrwać inwazję, ale straty są ogromne.");
+      playSound('partialVictory');
+    } else {
+      setKomunikat("Przetrwałeś, ale sytuacja jest krytyczna. Przyszłość ZSRR stoi pod znakiem zapytania.");
+      playSound('partialVictory');
+    }
+    unlockAchievement('survivor');
+    if (morale > 8) unlockAchievement('highMorale');
+    if (punkty > 15) unlockAchievement('strongForces');
+  };
+
+  const unlockAchievement = (achievementId: string) => {
+    if (!unlockedAchievements.includes(achievementId)) {
+      setUnlockedAchievements(prev => [...prev, achievementId]);
+      playSound('achievement');
+    }
+  };
 
   const resetGame = () => {
     setPunkty(10);
@@ -131,39 +234,11 @@ const GraFrontWschodni: React.FC = () => {
     setKomunikat("");
     setHistorycznaInformacja("");
     setStatystyki([{ tura: 0, punkty: 10, morale: 5 }]);
+    setScore(0);
+    setStreak(0);
+    setLastDecision(null);
+    setLuckyEvents(0);
     setMode('game');
-  };
-
-  useEffect(() => {
-    if (mode === 'game' && tura <= 10 && punkty > 0 && morale > 0) {
-      setWydarzenie(wydarzenia[Math.floor(Math.random() * wydarzenia.length)]);
-      setStatystyki((prev) => [...prev, { tura, punkty, morale }]);
-    } else if (mode === 'game') {
-      zakonczGre();
-    }
-  }, [tura, mode]);
-
-  const wykonajAkcje = (zmianaSil: number, zmianaMorale: number, info: string = "") => {
-    setPunkty((prev) => Math.max(0, prev + zmianaSil));
-    setMorale((prev) => Math.max(0, prev + zmianaMorale));
-    setTura((prev) => prev + 1);
-    setKomunikat(`Zmiana sił: ${zmianaSil}, Zmiana morale: ${zmianaMorale}`);
-    setHistorycznaInformacja(info);
-  };
-
-  const zakonczGre = () => {
-    setKoniecGry(true);
-    if (punkty <= 0) {
-      setKomunikat("Twoje siły zostały rozbite. Niemcy zwyciężyli.");
-    } else if (morale <= 0) {
-      setKomunikat("Morale twojej armii upadło. Żołnierze masowo dezerterują.");
-    } else if (punkty > 15 && morale > 7) {
-      setKomunikat("Gratulacje! Udało Ci się powstrzymać niemiecką inwazję i odnieść zwycięstwo!");
-    } else if (punkty > 10 || morale > 5) {
-      setKomunikat("Udało Ci się przetrwać inwazję, ale straty są ogromne.");
-    } else {
-      setKomunikat("Przetrwałeś, ale sytuacja jest krytyczna. Przyszłość ZSRR stoi pod znakiem zapytania.");
-    }
   };
 
   return (
@@ -172,16 +247,25 @@ const GraFrontWschodni: React.FC = () => {
         <h1 className="text-5xl font-bold mb-8 text-center text-red-800">Front Wschodni 1941</h1>
 
         {mode === 'start' && (
-          <div className="text-center">
+          <div className="text-center space-y-4">
+            <select
+              className="w-[180px] mx-auto p-2 border rounded"
+              onChange={(e) => setDifficulty(e.target.value as 'easy' | 'normal' | 'hard')}
+              value={difficulty}
+            >
+              <option value="easy">Łatwy</option>
+              <option value="normal">Normalny</option>
+              <option value="hard">Trudny</option>
+            </select>
             <button
               onClick={() => setMode('game')}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg mb-4"
+              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
             >
               Zagraj w grę
             </button>
             <button
               onClick={() => setMode('info')}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg"
+              className="w-full bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-400"
             >
               Informacje historyczne
             </button>
@@ -191,14 +275,22 @@ const GraFrontWschodni: React.FC = () => {
         {mode === 'info' && (
           <div>
             {wydarzenia.map((event, index) => (
-              <div key={index} className="mb-8 bg-blue-50 p-6 rounded-lg shadow">
+              <div key={index} className="mb-8 p-6 bg-white rounded-lg shadow">
                 <h2 className="text-2xl font-semibold mb-4 text-blue-800">{event.nazwa}</h2>
                 <p className="mb-6 text-gray-700">{event.opis}</p>
+                <ul>
+                  {Object.entries(event.opcje).map(([opcja, { zmianaSil, zmianaMorale, info }]) => (
+                    <li key={opcja} className="text-gray-600 mb-2">
+                      <strong>{opcja}:</strong> Zmiana sił: {zmianaSil}, Zmiana morale: {zmianaMorale}
+                      {info && <p className="text-gray-500 text-sm">Info: {info}</p>}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
             <button
               onClick={() => setMode('start')}
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg mt-8 block mx-auto"
+              className="mt-8 block mx-auto bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
             >
               Powrót
             </button>
@@ -207,22 +299,26 @@ const GraFrontWschodni: React.FC = () => {
 
         {mode === 'game' && (
           <>
-            <div className="grid grid-cols-3 gap-6 mb-8">
-              <div className="text-center p-4 bg-blue-100 rounded-lg shadow">
+            <div className="grid grid-cols-4 gap-6 mb-8">
+              <div className="p-4 bg-white rounded-lg shadow text-center">
                 <p className="text-lg font-semibold text-blue-800">Tura</p>
                 <p className="text-4xl font-bold text-blue-600">{tura}/10</p>
               </div>
-              <div className="text-center p-4 bg-green-100 rounded-lg shadow">
+              <div className="p-4 bg-white rounded-lg shadow text-center">
                 <p className="text-lg font-semibold text-green-800">Siły</p>
                 <p className="text-4xl font-bold text-green-600">{punkty}</p>
               </div>
-              <div className="text-center p-4 bg-yellow-100 rounded-lg shadow">
+              <div className="p-4 bg-white rounded-lg shadow text-center">
                 <p className="text-lg font-semibold text-yellow-800">Morale</p>
                 <p className="text-4xl font-bold text-yellow-600">{morale}</p>
               </div>
+              <div className="p-4 bg-white rounded-lg shadow text-center">
+                <p className="text-lg font-semibold text-purple-800">Wynik</p>
+                <p className="text-4xl font-bold text-purple-600">{score}</p>
+              </div>
             </div>
 
-            <div className="mb-8 bg-gray-100 p-4 rounded-lg shadow">
+            <div className="mb-8 p-4 bg-white rounded-lg shadow">
               <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={statystyki}>
                   <XAxis dataKey="tura" />
@@ -234,22 +330,16 @@ const GraFrontWschodni: React.FC = () => {
               </ResponsiveContainer>
             </div>
 
-            {historycznaInformacja && (
-              <Alert title="Ciekawostka" icon={<Book className="text-yellow-600 w-6 h-6" />}>
-                <p>{historycznaInformacja}</p>
-              </Alert>
-            )}
-
             {wydarzenie && !koniecGry && (
-              <div className="bg-gray-50 p-6 rounded-lg shadow mb-8">
+              <div className="mb-8 p-6 bg-white rounded-lg shadow">
                 <h2 className="text-3xl font-bold mb-4 text-red-800">{wydarzenie.nazwa}</h2>
                 <p className="mb-6 text-gray-700">{wydarzenie.opis}</p>
                 <div className="grid grid-cols-1 gap-4">
                   {Object.entries(wydarzenie.opcje).map(([opcja, { zmianaSil, zmianaMorale, info }]) => (
                     <button
                       key={opcja}
-                      onClick={() => wykonajAkcje(zmianaSil, zmianaMorale, info)}
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
+                      onClick={() => wykonajAkcje(zmianaSil, zmianaMorale, info, opcja)}
+                      className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
                     >
                       {opcja}
                     </button>
@@ -260,16 +350,93 @@ const GraFrontWschodni: React.FC = () => {
 
             {koniecGry && (
               <>
-                <Alert title="Koniec gry" icon={<AlertCircle className="text-yellow-600 w-6 h-6" />}>
+                <div className="mb-4 p-4  bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
+                  <p className="font-bold">Koniec gry</p>
                   <p>{komunikat}</p>
-                </Alert>
+                  <p className="mt-2">Twój końcowy wynik: {score}</p>
+                </div>
                 <button
                   onClick={resetGame}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg mt-8 block mx-auto"
+                  className="w-full mt-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
                 >
                   Zagraj ponownie
                 </button>
               </>
+            )}
+
+            <div className="mt-8 flex justify-between items-center">
+              <button
+                onClick={() => setShowAchievements(true)}
+                className="bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-400"
+              >
+                Osiągnięcia
+              </button>
+
+              <button
+                onClick={() => setSoundEnabled(!soundEnabled)}
+                className="bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-400"
+              >
+                {soundEnabled ? 'Wycisz' : 'Włącz dźwięk'}
+              </button>
+
+              <button
+                onClick={() => setShowHelp(true)}
+                className="bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-400"
+              >
+                Pomoc
+              </button>
+            </div>
+
+            {showAchievements && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div className="bg-white p-6 rounded-lg max-w-md w-full">
+                  <h2 className="text-2xl font-bold mb-4">Osiągnięcia</h2>
+                  <div className="space-y-4">
+                    {achievements.map((achievement) => (
+                      <div
+                        key={achievement.id}
+                        className={`p-4 rounded-lg ${
+                          unlockedAchievements.includes(achievement.id)
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-gray-100 text-gray-500'
+                        }`}
+                      >
+                        <h3 className="font-bold">{achievement.name}</h3>
+                        <p>{achievement.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => setShowAchievements(false)}
+                    className="mt-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                  >
+                    Zamknij
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {showHelp && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div className="bg-white p-6 rounded-lg max-w-md w-full">
+                  <h2 className="text-2xl font-bold mb-4">Jak grać?</h2>
+                  <div className="space-y-4">
+                    <p>1. Wybierz poziom trudności przed rozpoczęciem gry.</p>
+                    <p>2. W każdej turze podejmuj decyzje, które wpłyną na twoje siły i morale.</p>
+                    <p>3. Gra trwa 10 tur lub do momentu, gdy twoje siły lub morale spadną do zera.</p>
+                    <p>4. Zdobywaj punkty i odblokowuj osiągnięcia!</p>
+                    <p>5. Staraj się utrzymać jak najwyższe siły i morale, aby odnieść zwycięstwo.</p>
+                    <p>6. Uważaj na losowe wydarzenia, które mogą zmienić bieg gry!</p>
+                    <p>7. Konsekwentne decyzje mogą przynieść dodatkowe bonusy.</p>
+                  </div>
+                  <button
+                    onClick={() => setShowHelp(false)}
+                    className="mt-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                  >
+                    Zamknij
+                  </button>
+                </div>
+              </div>
             )}
           </>
         )}
