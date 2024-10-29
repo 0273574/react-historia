@@ -278,14 +278,6 @@ const GraFrontWschodni: React.FC = () => {
               <div key={index} className="mb-8 p-6 bg-white rounded-lg shadow">
                 <h2 className="text-2xl font-semibold mb-4 text-blue-800">{event.nazwa}</h2>
                 <p className="mb-6 text-gray-700">{event.opis}</p>
-                <ul>
-                  {Object.entries(event.opcje).map(([opcja, { zmianaSil, zmianaMorale, info }]) => (
-                    <li key={opcja} className="text-gray-600 mb-2">
-                      <strong>{opcja}:</strong> Zmiana sił: {zmianaSil}, Zmiana morale: {zmianaMorale}
-                      {info && <p className="text-gray-500 text-sm">Info: {info}</p>}
-                    </li>
-                  ))}
-                </ul>
               </div>
             ))}
             <button
