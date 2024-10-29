@@ -130,7 +130,7 @@ const GraFrontWschodni: React.FC = () => {
     } else if (mode === 'game') {
       zakonczGre();
     }
-  }, [tura, punkty, morale, mode]);
+  }, [tura, mode]);
 
   const wykonajAkcje = (zmianaSil: number, zmianaMorale: number, info: string = "") => {
     setPunkty((prev) => Math.max(0, prev + zmianaSil));
@@ -204,97 +204,56 @@ const GraFrontWschodni: React.FC = () => {
 
         {mode === 'game' && (
           <>
-            {<div className="min-h-screen bg-gradient-to-br from-red-700 via-red-500 to-yellow-500 p-8">
-      <div className="max-w-4xl mx-auto bg-white/90 p-8 rounded-2xl shadow-2xl">
-        <h1 className="text-5xl font-bold mb-8 text-center text-red-800">Front Wschodni 1941</h1>
-        
-        <div className="grid grid-cols-3 gap-6 mb-8">
-          <div className="text-center p-4 bg-blue-100 rounded-lg shadow">
-            <p className="text-lg font-semibold text-blue-800">Tura</p>
-            <p className="text-4xl font-bold text-blue-600">{tura}/10</p>
-          </div>
-          <div className="text-center p-4 bg-green-100 rounded-lg shadow">
-            <p className="text-lg font-semibold text-green-800">Siły</p>
-            <p className="text-4xl font-bold text-green-600">{punkty}</p>
-          </div>
-          <div className="text-center p-4 bg-yellow-100 rounded-lg shadow">
-            <p className="text-lg font-semibold text-yellow-800">Morale</p>
-            <p className="text-4xl font-bold text-yellow-600">{morale}</p>
-          </div>
-        </div>
-
-        <div className="mb-8 bg-gray-100 p-4 rounded-lg shadow">
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={statystyki}>
-              <XAxis dataKey="tura" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="punkty" stroke="#48bb78" name="Siły" />
-              <Line type="monotone" dataKey="morale" stroke="#ecc94b" name="Morale" />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {!koniecGry && wydarzenie && (
-          <div className="mb-8 bg-blue-50 p-6 rounded-lg shadow">
-            <h2 className="text-2xl font-semibold mb-4 text-blue-800">{wydarzenie.nazwa}</h2>
-            <p className="mb-6 text-gray-700">{wydarzenie.opis}</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {Object.entries(wydarzenie.opcje).map(([opcja, { zmianaSil, zmianaMorale, info }]) => (
-                <button
-                  key={opcja}
-                  onClick={() => wykonajAkcje(zmianaSil, zmianaMorale, info || "")}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow"
-                >
-                  {opcja}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {komunikat && (
-          <Alert title="Wynik akcji" icon={<AlertCircle className="h-6 w-6 text-yellow-700" />}>
-            {komunikat}
-          </Alert>
-        )}
-
-        {historycznaInformacja && (
-          <Alert title="Informacja historyczna" icon={<Book className="h-6 w-6 text-yellow-700" />}>
-            {historycznaInformacja}
-          </Alert>
-        )}
-
-        {koniecGry && (
-          <div className="mt-8 bg-red-50 p-6 rounded-lg shadow">
-            <h2 className="text-3xl font-bold mb-6 text-center text-red-800">Koniec gry</h2>
-            <div className="grid grid-cols-3 gap-6 mb-6">
+            <div className="grid grid-cols-3 gap-6 mb-8">
+              <div className="text-center p-4 bg-blue-100 rounded-lg shadow">
+                <p className="text-lg font-semibold text-blue-800">Tura</p>
+                <p className="text-4xl font-bold text-blue-600">{tura}/10</p>
+              </div>
               <div className="text-center p-4 bg-green-100 rounded-lg shadow">
-                <p className="text-lg font-semibold text-green-800">Końcowe siły</p>
+                <p className="text-lg font-semibold text-green-800">Siły</p>
                 <p className="text-4xl font-bold text-green-600">{punkty}</p>
               </div>
               <div className="text-center p-4 bg-yellow-100 rounded-lg shadow">
-                <p className="text-lg font-semibold text-yellow-800">Końcowe morale</p>
+                <p className="text-lg font-semibold text-yellow-800">Morale</p>
                 <p className="text-4xl font-bold text-yellow-600">{morale}</p>
               </div>
-              <div className="text-center p-4 bg-blue-100 rounded-lg shadow">
-                <p className="text-lg font-semibold text-blue-800">Przetrwane tury</p>
-                <p className="text-4xl font-bold text-blue-600">{tura - 1}</p>
+            </div>
+
+            <div className="mb-8 bg-gray-100 p-4 rounded-lg shadow">
+              <ResponsiveContainer width="100%" height={200}>
+                <LineChart data={statystyki}>
+                  <XAxis dataKey="tura" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="punkty" stroke="#48bb78" name="Siły" />
+                  <Line type="monotone" dataKey="morale" stroke="#ecc94b" name="Morale" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            {wydarzenie && !koniecGry && (
+              <div className="bg-gray-50 p-6 rounded-lg shadow mb-8">
+                <h2 className="text-3xl font-bold mb-4 text-red-800">{wydarzenie.nazwa}</h2>
+                <p className="mb-6 text-gray-700">{wydarzenie.opis}</p>
+                <div className="grid grid-cols-1 gap-4">
+                  {Object.entries(wydarzenie.opcje).map(([opcja, { zmianaSil, zmianaMorale, info }]) => (
+                    <button
+                      key={opcja}
+                      onClick={() => wykonajAkcje(zmianaSil, zmianaMorale, info)}
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
+                    >
+                      {opcja}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-            <p className="text-xl mb-6 text-center text-gray-700">{komunikat}</p>
-            <div className="text-center">
-              <button
-                onClick={() => window.location.reload()}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
-              >
-                Zagraj ponownie
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>}
+            )}
+
+            {koniecGry && (
+              <Alert title="Koniec gry" icon={<AlertCircle className="text-yellow-600 w-6 h-6" />}>
+                <p>{komunikat}</p>
+              </Alert>
+            )}
           </>
         )}
       </div>
