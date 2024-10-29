@@ -123,10 +123,21 @@ const GraFrontWschodni: React.FC = () => {
     { tura: 0, punkty: 10, morale: 5 }
   ]);
 
+  const resetGame = () => {
+    setPunkty(10);
+    setMorale(5);
+    setTura(1);
+    setKoniecGry(false);
+    setKomunikat("");
+    setHistorycznaInformacja("");
+    setStatystyki([{ tura: 0, punkty: 10, morale: 5 }]);
+    setMode('game');
+  };
+
   useEffect(() => {
     if (mode === 'game' && tura <= 10 && punkty > 0 && morale > 0) {
       setWydarzenie(wydarzenia[Math.floor(Math.random() * wydarzenia.length)]);
-      setStatystyki(prev => [...prev, { tura, punkty, morale }]);
+      setStatystyki((prev) => [...prev, { tura, punkty, morale }]);
     } else if (mode === 'game') {
       zakonczGre();
     }
@@ -231,6 +242,12 @@ const GraFrontWschodni: React.FC = () => {
               </ResponsiveContainer>
             </div>
 
+            {historycznaInformacja && (
+              <Alert title="Ciekawostka" icon={<Book className="text-yellow-600 w-6 h-6" />}>
+                <p>{historycznaInformacja}</p>
+              </Alert>
+            )}
+
             {wydarzenie && !koniecGry && (
               <div className="bg-gray-50 p-6 rounded-lg shadow mb-8">
                 <h2 className="text-3xl font-bold mb-4 text-red-800">{wydarzenie.nazwa}</h2>
@@ -250,9 +267,17 @@ const GraFrontWschodni: React.FC = () => {
             )}
 
             {koniecGry && (
-              <Alert title="Koniec gry" icon={<AlertCircle className="text-yellow-600 w-6 h-6" />}>
-                <p>{komunikat}</p>
-              </Alert>
+              <>
+                <Alert title="Koniec gry" icon={<AlertCircle className="text-yellow-600 w-6 h-6" />}>
+                  <p>{komunikat}</p>
+                </Alert>
+                <button
+                  onClick={resetGame}
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg mt-8 block mx-auto"
+                >
+                  Zagraj ponownie
+                </button>
+              </>
             )}
           </>
         )}
