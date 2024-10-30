@@ -27,7 +27,7 @@ const wydarzenia: Wydarzenie[] = [
           "Zrzuty zaopatrzenia": { zmianaSil: -1, zmianaMorale: 3, info: "Zrzuty zaopatrzenia pozwalają na dłuższą obronę i podtrzymanie morale okrążonych wojsk." },
           "Ataki bombowe na linie niemieckie": { zmianaSil: -2, zmianaMorale: 4, info: "Ataki bombowe osłabiają niemieckie okrążenie, dając szansę na przebicie się." }
         },
-        opisStrona: "Kocioł pod Smoleńskiem (lipiec–wrzesień 1941) - Siły niemieckie: Grupa Armii „Środek" pod dowództwem Fiodora von Bocka, składająca się z 9. i 4. Armii, 3. i 2. Grupy Pancernej. Pojazdy i czołgi: PzKpfw III i IV, czołgi lekkie PzKpfw II. Siły radzieckie: Front Zachodni, Centralny i Rezerwowy, w tym 16., 19. i 20. Armia."
+        opisStrona: 'Kocioł pod Smoleńskiem (lipiec–wrzesień 1941) - Siły niemieckie: Grupa Armii „Środek" pod dowództwem Fiodora von Bocka, składająca się z 9. i 4. Armii, 3. i 2. Grupy Pancernej. Pojazdy i czołgi: PzKpfw III i IV, czołgi lekkie PzKpfw II. Siły radzieckie: Front Zachodni, Centralny i Rezerwowy, w tym 16., 19. i 20. Armia.'
       },
       {
         nazwa: "Kocioł pod Kijowem",
@@ -39,7 +39,7 @@ const wydarzenia: Wydarzenie[] = [
           "Wsparcie pancerne": { zmianaSil: -2, zmianaMorale: 4, info: "Użycie rezerw pancernych może pomóc w przebiciu się z okrążenia, ale wiąże się z ryzykiem ich utraty." },
           "Zrzuty zaopatrzenia": { zmianaSil: -1, zmianaMorale: 2, info: "Zrzuty zaopatrzenia przedłużają obronę i dają czas na zorganizowanie kontrataku." }
         },
-        opisStrona: "Kocioł pod Kijowem (sierpień–wrzesień 1941) - Siły niemieckie: Grupa Armii „Południe" pod dowództwem Gerda von Rundstedta oraz jednostki z Grupy Armii „Środek". Pojazdy i czołgi: PzKpfw III i IV, wsparcie lotnicze Luftwaffe. Siły radzieckie: Front Południowo-Zachodni, składający się z 5., 37., i 26. Armii."
+        opisStrona: 'Kocioł pod Kijowem (sierpień–wrzesień 1941) - Siły niemieckie: Grupa Armii „Południe" pod dowództwem Gerda von Rundstedta oraz jednostki z Grupy Armii „Środek". Pojazdy i czołgi: PzKpfw III i IV, wsparcie lotnicze Luftwaffe. Siły radzieckie: Front Południowo-Zachodni, składający się z 5., 37., i 26. Armii.'
       },
       {
         nazwa: "Oblężenie Leningradu",
@@ -51,7 +51,7 @@ const wydarzenia: Wydarzenie[] = [
           "Produkcja czołgów w mieście": { zmianaSil: -1, zmianaMorale: 4, info: "Fabryki Leningradu kontynuują produkcję czołgów, wzmacniając obronę miasta." },
           "Zrzuty zaopatrzenia": { zmianaSil: -1, zmianaMorale: 3, info: "Zrzuty zaopatrzenia przez Jezioro Ładoga ('Droga Życia') pomagają przetrwać oblężenie." }
         },
-        opisStrona: "Oblężenie Leningradu (wrzesień 1941 – styczeń 1944) - Siły niemieckie: Grupa Armii „Północ" pod dowództwem Wilhelma von Leeba. Siły radzieckie: Leningradzki Front Obrony oraz Front Wołchowski. Główne wyposażenie: czołgi T-34, KW-1 i artyleria przeciwpancerna."
+        opisStrona: 'Oblężenie Leningradu (wrzesień 1941 – styczeń 1944) - Siły niemieckie: Grupa Armii „Północ" pod dowództwem Wilhelma von Leeba. Siły radzieckie: Leningradzki Front Obrony oraz Front Wołchowski. Główne wyposażenie: czołgi T-34, KW-1 i artyleria przeciwpancerna.'
       },
       {
         nazwa: "Bitwa na Łuku Kurskim",
@@ -63,7 +63,7 @@ const wydarzenia: Wydarzenie[] = [
           "Skierowanie lotnictwa na niemieckie kolumny pancerne": { zmianaSil: -2, zmianaMorale: 5, info: "Ataki lotnicze na niemieckie czołgi znacząco osłabiają siłę uderzeniową wroga." },
           "Koncentracja czołgów w kluczowym miejscu": { zmianaSil: -1, zmianaMorale: 4, info: "Skoncentrowanie sił pancernych pozwala na skuteczne odparcie niemieckiego natarcia." }
         },
-        opisStrona: "Bitwa na Łuku Kurskim (lipiec–sierpień 1943) - Siły niemieckie: Grupa Armii „Południe" i „Środek", wyposażone w czołgi Tygrys I, Pantera i działa Elefant. Siły radzieckie: Front Centralny, Woroneżski i Stepowy pod dowództwem Żukowa, wykorzystujące czołgi T-34/76 i działa samobieżne SU-152."
+        opisStrona: 'Bitwa na Łuku Kurskim (lipiec–sierpień 1943) - Siły niemieckie: Grupa Armii „Południe" i „Środek", wyposażone w czołgi Tygrys I, Pantera i działa Elefant. Siły radzieckie: Front Centralny, Woroneżski i Stepowy pod dowództwem Żukowa, wykorzystujące czołgi T-34/76 i działa samobieżne SU-152.'
       },
       {
         nazwa: "Oblężenie Stalingradu",
@@ -75,7 +75,7 @@ const wydarzenia: Wydarzenie[] = [
           "Przerzut czołgów z rezerw": { zmianaSil: -2, zmianaMorale: 6, info: "Wzmocnienie obrony Stalingradu czołgami z rezerw znacząco zwiększa szanse na utrzymanie miasta." },
           "Ataki bombowe na linie niemieckie": { zmianaSil: -1, zmianaMorale: 3, info: "Bombardowania osłabiają niemieckie natarcie i utrudniają dostawy zaopatrzenia dla wroga." }
         },
-        opisStrona: "Oblężenie Stalingradu (sierpień 1942 – luty 1943) - Siły niemieckie: 6. Armia pod dowództwem Paulusa, wspierana przez 4. Armię Pancerną. Siły radzieckie: Front Stalingradzki, Front Doński i Południowo-Zachodni, w tym słynna 62. Armia Czujkowa."
+        opisStrona: 'Oblężenie Stalingradu (sierpień 1942 – luty 1943) - Siły niemieckie: 6. Armia pod dowództwem Paulusa, wspierana przez 4. Armię Pancerną. Siły radzieckie: Front Stalingradzki, Front Doński i Południowo-Zachodni, w tym słynna 62. Armia Czujkowa.'
       },
       {
         nazwa: "Walki o Dyneburg",
@@ -87,7 +87,7 @@ const wydarzenia: Wydarzenie[] = [
           "Kontruderzenie": { zmianaSil: -2, zmianaMorale: 3, info: "Szybkie kontruderzenie może zaskoczyć niemieckie siły i opóźnić ich postęp." },
           "Mobilizacja cywilów": { zmianaSil: -1, zmianaMorale: 2, info: "Zaangażowanie cywilów w obronę miasta zwiększa szanse na jego utrzymanie, ale może prowadzić do większych strat." }
         },
-        opisStrona: "Walki o Dyneburg (lipiec 1941) - Siły niemieckie: Grupa Armii „Północ" pod dowództwem von Leeba, głównie jednostki 4. Grupy Pancernej. Siły radzieckie: 8. i 11. Armia Frontu Północno-Zachodniego, wyposażone w starsze modele czołgów T-26 i BT-7."
+        opisStrona: 'Walki o Dyneburg (lipiec 1941) - Siły niemieckie: Grupa Armii „Północ" pod dowództwem von Leeba, głównie jednostki 4. Grupy Pancernej. Siły radzieckie: 8. i 11. Armia Frontu Północno-Zachodniego, wyposażone w starsze modele czołgów T-26 i BT-7.'
       },
       {
         nazwa: "Obrona Dźwiny",
@@ -99,7 +99,7 @@ const wydarzenia: Wydarzenie[] = [
           "Wzmocnienie artylerii": { zmianaSil: -1, zmianaMorale: 3, info: "Skoncentrowanie artylerii wzdłuż rzeki może skutecznie powstrzymać niemieckie próby przeprawy." },
           "Taktyka spalonej ziemi": { zmianaSil: -2, zmianaMorale: 2, info: "Zniszczenie infrastruktury i zasobów spowolni niemiecki postęp, ale odbije się na ludności cywilnej." }
         },
-        opisStrona: "Obrona Dźwiny (czerwiec 1941) - Siły niemieckie: Grupa Armii „Północ" z wsparciem Luftwaffe. Siły radzieckie: Front Północno-Zachodni z artylerią przeciwpancerną i zaporami minowymi."
+        opisStrona: 'Obrona Dźwiny (czerwiec 1941) - Siły niemieckie: Grupa Armii „Północ" z wsparciem Luftwaffe. Siły radzieckie: Front Północno-Zachodni z artylerią przeciwpancerną i zaporami minowymi.'
       }
 ];
 
