@@ -285,7 +285,7 @@ const GraFrontWschodni: React.FC = () => {
             {wydarzenia.map((event, index) => (
               <div key={index} className="mb-8 p-6 bg-white rounded-lg shadow">
                 <h2 className="text-2xl font-semibold mb-4 text-blue-800">{event.nazwa}</h2>
-                <p className="mb-6 text-gray-700">{event.opis}</p>
+                <p className="mb-6 text-gray-700">{event.opisStrona}</p>
               </div>
             ))}
             <button
