@@ -13,6 +13,7 @@ interface Wydarzenie {
   nazwa: string;
   opis: string;
   opcje: Record<string, Opcja>;
+  opisStrona: string;
 }
 
 const wydarzenia: Wydarzenie[] = [
