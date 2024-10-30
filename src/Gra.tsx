@@ -25,7 +25,16 @@ const wydarzenia: Wydarzenie[] = [
           "Poddać się": { zmianaSil: -3, zmianaMorale: 0 },
           "Zrzuty zaopatrzenia": { zmianaSil: -1, zmianaMorale: 3, info: "Zrzuty zaopatrzenia pozwalają na dłuższą obronę i podtrzymanie morale okrążonych wojsk." },
           "Ataki bombowe na linie niemieckie": { zmianaSil: -2, zmianaMorale: 4, info: "Ataki bombowe osłabiają niemieckie okrążenie, dając szansę na przebicie się." }
-        }
+        },
+        opisStrona:'"Kocioł pod Smoleńskiem (lipiec–wrzesień 1941)
+Siły niemieckie: Grupa Armii „Środek” pod dowództwem Fiodora von Bocka, składająca się z 9. i 4. Armii, 3. i 2. Grupy Pancernej.
+
+Pojazdy i czołgi: PzKpfw III i IV (główne czołgi średnie), czołgi lekkie PzKpfw II.
+Artyleria: Samobieżna artyleria, działa 88 mm Flak, które używane były też w roli przeciwpancernej.
+Siły radzieckie: Front Zachodni, Centralny i Rezerwowy, w tym 16., 19. i 20. Armia.
+
+Pojazdy i czołgi: Czołgi T-34 i KW-1 (cięższy opancerzony model), a także starsze modele, takie jak BT-7, T-26 i T-28.
+Artyleria: Działa przeciwlotnicze kal. 76 mm, które okazały się skuteczne przeciwko niemieckim czołgom."
       },
       {
         nazwa: "Kocioł pod Kijowem",
@@ -36,7 +45,16 @@ const wydarzenia: Wydarzenie[] = [
           "Utrzymać Kijów": { zmianaSil: -3, zmianaMorale: 2 },
           "Wsparcie pancerne": { zmianaSil: -2, zmianaMorale: 4, info: "Użycie rezerw pancernych może pomóc w przebiciu się z okrążenia, ale wiąże się z ryzykiem ich utraty." },
           "Zrzuty zaopatrzenia": { zmianaSil: -1, zmianaMorale: 2, info: "Zrzuty zaopatrzenia przedłużają obronę i dają czas na zorganizowanie kontrataku." }
-        }
+        },
+        opisStrona:"Kocioł pod Kijowem (sierpień–wrzesień 1941)
+Siły niemieckie: Grupa Armii „Południe” (Feldmarszałek Gerd von Rundstedt) oraz jednostki z Grupy Armii „Środek”.
+
+Pojazdy i czołgi: Również PzKpfw III i IV, wspierane przez pojazdy zwiadowcze, działa samobieżne, półgąsienicowe transportery opancerzone (Sd.Kfz. 251).
+Lotnictwo: Luftwaffe z bombowcami i samolotami myśliwskimi (Junkers Ju 87, Messerschmitt Bf 109).
+Siły radzieckie: Front Południowo-Zachodni, 5., 37., 26. Armia, w tym również jednostki zmotoryzowane i kawaleryjskie.
+
+Pojazdy i czołgi: Czołgi T-34 i KW-1, starsze modele (BT-5, BT-7).
+Artyleria: Wzmożone użycie artylerii przeciwpancernej i piechoty w formacjach mobilnych."
       },
       {
         nazwa: "Oblężenie Leningradu",
@@ -47,7 +65,16 @@ const wydarzenia: Wydarzenie[] = [
           "Przerwać okrążenie": { zmianaSil: -2, zmianaMorale: 3 },
           "Produkcja czołgów w mieście": { zmianaSil: -1, zmianaMorale: 4, info: "Fabryki Leningradu kontynuują produkcję czołgów, wzmacniając obronę miasta." },
           "Zrzuty zaopatrzenia": { zmianaSil: -1, zmianaMorale: 3, info: "Zrzuty zaopatrzenia przez Jezioro Ładoga ('Droga Życia') pomagają przetrwać oblężenie." }
-        }
+        },
+        opisStrona:"Oblężenie Leningradu (wrzesień 1941 – styczeń 1944)
+Siły niemieckie: Grupa Armii „Północ” pod dowództwem Wilhelma von Leeba.
+
+Pojazdy i czołgi: Niemcy wykorzystali głównie PzKpfw IV, działa samobieżne Stug III, Sd.Kfz. 10 i Sd.Kfz. 251 do transportu.
+Artyleria: Ciężkie działa oblężnicze, np. haubice kal. 210 mm, działa kolejowe typu Schwerer Gustav, ostrzał z morza przez niemiecką Kriegsmarine.
+Siły radzieckie: Leningradzki Front Obrony oraz późniejsze oddziały Frontu Wołchowskiego.
+
+Pojazdy i czołgi: Czołgi T-34 oraz lekkie T-26 i KW-1, których załogi często walczyły także jako piechota.
+Artyleria: Działa przeciwpancerne oraz moździerze, wsparcie ogniowe z pobliskiej Floty Bałtyckiej."
       },
       {
         nazwa: "Bitwa na Łuku Kurskim",
@@ -58,7 +85,16 @@ const wydarzenia: Wydarzenie[] = [
           "Wycofać się": { zmianaSil: -1, zmianaMorale: 1 },
           "Skierowanie lotnictwa na niemieckie kolumny pancerne": { zmianaSil: -2, zmianaMorale: 5, info: "Ataki lotnicze na niemieckie czołgi znacząco osłabiają siłę uderzeniową wroga." },
           "Koncentracja czołgów w kluczowym miejscu": { zmianaSil: -1, zmianaMorale: 4, info: "Skoncentrowanie sił pancernych pozwala na skuteczne odparcie niemieckiego natarcia." }
-        }
+        },
+        opisStrona:"Bitwa na Łuku Kurskim (lipiec–sierpień 1943)
+Siły niemieckie: Grupa Armii „Południe” (von Manstein) i „Środek” (von Kluge), m.in. 4. Armia Pancerna.
+
+Pojazdy i czołgi: Czołgi Tygrys I, Pantera (PzKpfw V), Elefant (działo przeciwpancerne), PzKpfw III i IV.
+Artyleria i samobieżne działa przeciwpancerne: Artyleria samobieżna Wespe, działa 88 mm Flak, Luftwaffe.
+Siły radzieckie: Front Centralny, Woroneżski i Stepowy pod dowództwem Żukowa.
+
+Pojazdy i czołgi: Czołgi T-34/76, T-70, ciężkie KW-1 i nowo wprowadzane działa samobieżne SU-152.
+Artyleria: Artyleria dalekosiężna, moździerze, jednostki lotnicze i zapory minowe."
       },
       {
         nazwa: "Oblężenie Stalingradu",
@@ -69,7 +105,16 @@ const wydarzenia: Wydarzenie[] = [
           "Wycofać się za Wołgę": { zmianaSil: -1, zmianaMorale: 0 },
           "Przerzut czołgów z rezerw": { zmianaSil: -2, zmianaMorale: 6, info: "Wzmocnienie obrony Stalingradu czołgami z rezerw znacząco zwiększa szanse na utrzymanie miasta." },
           "Ataki bombowe na linie niemieckie": { zmianaSil: -1, zmianaMorale: 3, info: "Bombardowania osłabiają niemieckie natarcie i utrudniają dostawy zaopatrzenia dla wroga." }
-        }
+        },
+        opisStrona:"Oblężenie Stalingradu (sierpień 1942 – luty 1943)
+Siły niemieckie: 6. Armia (Paulus), wspierana przez 4. Armię Pancerną.
+
+Pojazdy i czołgi: PzKpfw III i IV, Sd.Kfz. 251, artyleria samobieżna, działa przeciwlotnicze 88 mm Flak.
+Lotnictwo: Luftwaffe, z intensywnym bombardowaniem miasta przez Junkers Ju 87, Heinkel He 111.
+Siły radzieckie: Front Stalingradzki, a potem Front Doński i Południowo-Zachodni (m.in. 62. Armia pod dowództwem Wasilija Czujkowa).
+
+Pojazdy i czołgi: T-34, KW-1, SU-76, a także transportery opancerzone i czołgi zdobyczne.
+Piechota i artyleria: Walki w mieście z intensywnym użyciem piechoty, moździerzy, broni ręcznej."
       },
       {
         nazwa: "Walki o Dyneburg",
@@ -80,7 +125,16 @@ const wydarzenia: Wydarzenie[] = [
           "Ewakuować miasto": { zmianaSil: -2, zmianaMorale: 0 },
           "Kontruderzenie": { zmianaSil: -2, zmianaMorale: 3, info: "Szybkie kontruderzenie może zaskoczyć niemieckie siły i opóźnić ich postęp." },
           "Mobilizacja cywilów": { zmianaSil: -1, zmianaMorale: 2, info: "Zaangażowanie cywilów w obronę miasta zwiększa szanse na jego utrzymanie, ale może prowadzić do większych strat." }
-        }
+        },
+        opisStrona:"Walki o Dyneburg (Daugavpils) (lipiec 1941)
+Siły niemieckie: Grupa Armii „Północ” (Wilhelm von Leeb), jednostki z 4. Grupy Pancernej.
+
+Pojazdy i czołgi: Głównie PzKpfw III i IV, szybkie jednostki pancerne i transportowe.
+Piechota i wsparcie lotnicze: Szturmowe wsparcie lotnicze Luftwaffe.
+Siły radzieckie: 8. i 11. Armia Frontu Północno-Zachodniego.
+
+Pojazdy i czołgi: Starsze modele T-26, BT-5, BT-7.
+Artyleria i piechota: Skupienie na działaniach obronnych i improwizowanym wsparciu piechoty."
       },
       {
         nazwa: "Obrona Dźwiny",
@@ -91,7 +145,16 @@ const wydarzenia: Wydarzenie[] = [
           "Wycofać się na drugą linię obrony": { zmianaSil: -1, zmianaMorale: 1 },
           "Wzmocnienie artylerii": { zmianaSil: -1, zmianaMorale: 3, info: "Skoncentrowanie artylerii wzdłuż rzeki może skutecznie powstrzymać niemieckie próby przeprawy." },
           "Taktyka spalonej ziemi": { zmianaSil: -2, zmianaMorale: 2, info: "Zniszczenie infrastruktury i zasobów spowolni niemiecki postęp, ale odbije się na ludności cywilnej." }
-        }
+        },
+        opisStrona:"Obrona Dźwiny (Dvina) (czerwiec 1941)
+Siły niemieckie: Grupa Armii „Północ” kontynuująca szybki marsz na Leningrad.
+
+Pojazdy i czołgi: Głównie PzKpfw III i IV.
+Wsparcie lotnicze: Bombardowania punktów strategicznych przez Luftwaffe, w szczególności mostów i przepraw.
+Siły radzieckie: Front Północno-Zachodni.
+
+Pojazdy i czołgi: BT-7, T-26, niewielkie ilości cięższych czołgów.
+Piechota i artyleria: Linia obronna oparta o moździerze, działa przeciwpancerne, zapory przeciwpancerne i miny."
       }
 ];
 
@@ -277,7 +340,7 @@ const GraFrontWschodni: React.FC = () => {
             {wydarzenia.map((event, index) => (
               <div key={index} className="mb-8 p-6 bg-white rounded-lg shadow">
                 <h2 className="text-2xl font-semibold mb-4 text-blue-800">{event.nazwa}</h2>
-                <p className="mb-6 text-gray-700">{event.opis}</p>
+                <p className="mb-6 text-gray-700">{event.opisStrona}</p>
               </div>
             ))}
             <button
